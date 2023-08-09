@@ -2,8 +2,6 @@ FROM --platform=linux/amd64 node:16.16.0
 
 WORKDIR /usr/src/app
 
-RUN apt-get install chromium-browser
-
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY package.json /usr/src/app/package.json
 
