@@ -5,6 +5,37 @@ handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
 });
 const XLSX = require('xlsx');
 const nodeXlsx = require('node-xlsx');
+const _ = require('lodash');
+
+function validateHeaders(headers) {
+  const basicHeaders = [
+    'PAYMENT DATE',
+    'NPK / NAMA',
+    'BRANCH',
+    'NO',
+    'COMMISSION (FYC;SYC;RC;APB)',
+    'PERSONAL PRODUCTION BONUS',
+    '',
+    'GROUP PRODUCTION BONUS',
+    'ALLOWANCE',
+    'CONTEST & OTHER',
+    'TOTAL INCOME',
+    'TAX',
+    '',
+    'TAX ADJUSTMENT',
+    '',
+    'NET INCOME',
+    'DEDUCTION',
+    'PENDING INCOME',
+    'NET PAYMENT',
+    'SAY (IN RUPIAH)',
+  ];
+
+  const isEqual = _.isEqual(basicHeaders, headers);
+  if (!isEqual) {
+    throw Object.assign(new Error('Invalid Excel File'), { code: 400 });
+  }
+}
 
 async function compile(excelBlob) {
   const template = fs.readFileSync('./template.html', 'utf-8');
@@ -17,6 +48,7 @@ async function compile(excelBlob) {
   const csvHeaders = [];
   const csvHeader1 = csvRows[0].split(',');
   const csvHeader2 = csvRows[1].split(',');
+  validateHeaders(csvHeader1);
 
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let alphabetIndex = 0;
@@ -44,6 +76,8 @@ async function compile(excelBlob) {
       alphabetIndex++;
     }
   }
+
+  validateHeaders(csvHeaders);
 
   const csvValues = csvRows.slice(2);
 
@@ -88,8 +122,15 @@ async function compile(excelBlob) {
   // fs.writeFileSync('./data.json', JSON.stringify(dataResult), 'utf-8');
 
   const compileTemplate = handlebars.compile(template);
+  const result = [];
 
-  const result = compileTemplate(dataResult[0]);
+  for (let i = 0; i < dataResult.length; i++) {
+    const html = compileTemplate(dataResult[i]);
+    result.push({
+      name: dataResult[i].name + '-' + dataResult[i].paymentDate,
+      html,
+    });
+  }
 
   return result;
   // fs.writeFileSync('./index.html', result, 'utf-8');
