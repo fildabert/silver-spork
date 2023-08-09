@@ -24,8 +24,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
   // CONVERT TO PDF
   const browser = await puppeteer.launch({
-    headless: false,
-    args: ['--no-sandbox'],
+    headless: 'new',
   });
   const page = await browser.newPage();
 
