@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: '2'
+services:
+  app:
+    platform: linux/amd64
+    container_name: pdf-converter
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - proxy
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+      - 'traefik.http.routers.pdf-converter.rule=Host(`pdf-converter.fildabert.com`)'
+      - 'traefik.http.routers.pdf-converter.entrypoints=websecure'
+      - 'traefik.http.services.pdf-converter.loadbalancer.server.port=3001'
+    ports:
+      - 3002:3002
+    command: sh -c 'npm run start'
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true
