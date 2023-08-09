@@ -19,6 +19,7 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
+    "start": "node app.js",
     "test": "mocha tests/unit/",
     "dev": "nodemon app.js"
   },
