@@ -30,11 +30,11 @@ function validateHeaders(headers) {
     'NET PAYMENT',
     'SAY (IN RUPIAH)',
   ];
-  const headerz = headers.slice(0, 4).map((h) => {
+  const headerz = headers.map((h) => {
     return h.trim();
   });
 
-  const isEqual = _.isEqual(basicHeaders.slice(0, 4), headerz);
+  const isEqual = _.isEqual(basicHeaders, headerz);
   if (!isEqual) {
     throw Object.assign(new Error('Invalid Excel File'), { code: 400 });
   }
@@ -79,6 +79,11 @@ async function compile(excelBlob) {
       alphabetIndex++;
     }
   }
+  csvHeaders[0].title = csvHeaders[0].title.replace(/;/g, ',');
+  csvHeaders[0].items[0].itemName = csvHeaders[0].items[0].itemName.replace(
+    /;/g,
+    ','
+  );
 
   const csvValues = csvRows.slice(2);
 
@@ -98,12 +103,18 @@ async function compile(excelBlob) {
       const obj = { ...csvHeaders[j] };
 
       if (obj.items.length === 0) {
-        let totalz = Number(row[rowIncrement]) || row[rowIncrement];
+        let totalz =
+          Number(row[rowIncrement]) >= 0
+            ? Number(row[rowIncrement])
+            : row[rowIncrement];
         obj.total = totalz.toLocaleString();
       } else {
         let sum = 0;
         obj.items.forEach((item, index) => {
-          let totalz = Number(row[rowIncrement]) || row[rowIncrement];
+          let totalz =
+            Number(row[rowIncrement]) >= 0
+              ? Number(row[rowIncrement])
+              : row[rowIncrement];
           item.itemValue = totalz.toLocaleString() || 0;
           sum += totalz;
           if (obj.items.length > 1) {

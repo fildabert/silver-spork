@@ -5,55 +5,234 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="px-10 py-4 mt-5">
+  <body class="px-8 py-4 mt-6 pr-28 ml-1">
     <!-- HEADER -->
-    <div class="flex justify-between text-sm">
+    <div class="flex justify-between text-sm font-medium">
       <div class="flex flex-col">
         <div class="leading-[1]">PT SEQUIS TEST ABC</div>
         <div class="leading-[1]">INCOME STATEMENT</div>
         <div class="leading-[1]">PAYMENT DATE : {{paymentDate}}</div>
         <div class="h-4"></div>
-        <div class="leading-[1]">NPK / Nama: {{ name }}</div>
-        <div class="leading-[1]">Branch : {{branch}}</div>
+        <div class="leading-[1]">NPK / NAMA: {{ name }}</div>
+        <div class="leading-[1]">
+          BRANCH : <span class="w-4 pl-4 h-1"></span> {{branch}}
+        </div>
       </div>
 
-      <div>NO: {{no}}</div>
+      <div class="pr-5">NO: {{no}}</div>
     </div>
 
     <!-- DIVIDER -->
     <div class="my-1 border-y-[0.5px] border-y-black w-full"></div>
 
-    <div class="px-2">
-      {{#Invoices}}
-      <div class="text-xs my-1">
+    <div class="text-sm font-medium pr-6">
+      <!-- A. COMMISSION -->
+      {{#with Invoices.[0]}}
+      <div class="my-1">
         <div>{{no}}. {{title}}</div>
 
-        <div class="flex flex-col pl-12">
+        <div class="flex flex-col pl-16 leading-[1] mt-3">
           <div>
             {{#items}}
             <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
-            <div class="flex justify-between pr-20">
+            <div class="flex justify-between pr-28">
               <div>{{itemName}}</div>
               <div>{{itemValue}}</div>
             </div>
             {{/items}}
           </div>
 
-          <div class="flex justify-between">
-            {{#ifEquals title "TAX"}}
-            <div>TAX BORNED BY AGENT</div>
-            <div class="">{{total}}</div>
-            {{else}} {{#ifEquals title "TAX ADJUSTMENT"}}
-            <div>TAX BORNED BY AGENT ADJUST</div>
-            <div class="">{{total}}</div>
-            {{else}}
+          <div class="flex justify-between mb-3">
             <div>TOTAL</div>
             <div class="">{{total}}</div>
-            {{/ifEquals}} {{/ifEquals}}
           </div>
         </div>
       </div>
-      {{/Invoices}}
+      {{/with}}
+
+      <!-- B. PERSONAL PRODUCTION BONUS -->
+      {{#with Invoices.[1]}}
+      <div class="my-1">
+        <div class="leading-[1]">{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1]">
+          <div>
+            {{#items}}
+            <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
+            <div class="flex justify-between pr-28">
+              <div>{{itemName}}</div>
+              <div>{{itemValue}}</div>
+            </div>
+            {{/items}}
+          </div>
+
+          <div class="flex justify-between my-3">
+            <div>TOTAL</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- C. GROUP PRODUCTION BONUS -->
+      {{#with Invoices.[2]}}
+      <div class="my-1">
+        <div class="leading-[1]">{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1]">
+          <div>
+            {{#items}}
+            <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
+            <div class="flex justify-between pr-28">
+              <div>{{itemName}}</div>
+              <div>{{itemValue}}</div>
+            </div>
+            {{/items}}
+          </div>
+
+          <div class="flex justify-between my-3">
+            <div>TOTAL</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- D. ALLOWANCE -->
+      {{#with Invoices.[3]}}
+      <div class="my-1">
+        <div class="leading-[1]">{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1]">
+          <div class="flex justify-between my-3">
+            <div>TOTAL</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- E. CONTEST & OTHER -->
+      {{#with Invoices.[4]}}
+      <div class="my-1">
+        <div class="leading-[1]">{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1]">
+          <div class="flex justify-between my-3">
+            <div>TOTAL</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- F. TOTAL INCOME -->
+      {{#with Invoices.[5]}}
+      <div class="my-1">
+        <div class="flex justify-between">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- G. TAX -->
+      {{#with Invoices.[6]}}
+      <div class="my-1">
+        <div>{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1] mt-3">
+          <div>
+            {{#items}}
+            <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
+            <div class="flex justify-between pr-28">
+              <div>{{itemName}}</div>
+              <div>{{itemValue}}</div>
+            </div>
+            {{/items}}
+          </div>
+
+          <div class="flex justify-between mb-3">
+            <div>TAX BORNED BY AGENT</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- H. TAX ADJUSTMENT -->
+      {{#with Invoices.[7]}}
+      <div class="my-1">
+        <div>{{no}}. {{title}}</div>
+
+        <div class="flex flex-col pl-16 leading-[1] mt-3">
+          <div>
+            {{#items}}
+            <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
+            <div class="flex justify-between pr-28">
+              <div>{{itemName}}</div>
+              <div>{{itemValue}}</div>
+            </div>
+            {{/items}}
+          </div>
+
+          <div class="flex justify-between mb-3">
+            <div>TAX BORNED BY AGENT</div>
+            <div class="">{{total}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- I. NET INCOME -->
+      {{#with Invoices.[8]}}
+      <div class="my-1 mb-2">
+        <div class="flex justify-between">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- J. DEDUCTION -->
+      {{#with Invoices.[9]}}
+      <div class="my-1 mb-2">
+        <div class="flex justify-between">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- K. PENDING INCOME -->
+      {{#with Invoices.[10]}}
+      <div class="my-1 mb-2">
+        <div class="flex justify-between">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- L. NET PAYMENT -->
+      {{#with Invoices.[11]}}
+      <div class="my-1 mb-2">
+        <div class="flex justify-between">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
+
+      <!-- M. SAY IN RUPIAH -->
+      {{#with Invoices.[12]}}
+      <div class="my-1 mb-2">
+        <div class="flex gap-2">
+          <div class="">{{no}}. {{title}}</div>
+          <div class="">{{total}}</div>
+        </div>
+      </div>
+      {{/with}}
     </div>
 
     <div class="text-[8px] italic font-bold">
