@@ -17,7 +17,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.get('/template', async (req, res) => {
   const template = fs.readFileSync('./Template-PDF.xlsx');
-  console.log(template);
   res.setHeader(
     'Content-Type',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

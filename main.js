@@ -30,8 +30,11 @@ function validateHeaders(headers) {
     'NET PAYMENT',
     'SAY (IN RUPIAH)',
   ];
+  const headerz = headers.slice(0, 4).map((h) => {
+    return h.trim();
+  });
 
-  const isEqual = _.isEqual(basicHeaders, headers);
+  const isEqual = _.isEqual(basicHeaders.slice(0, 4), headerz);
   if (!isEqual) {
     throw Object.assign(new Error('Invalid Excel File'), { code: 400 });
   }
@@ -76,8 +79,6 @@ async function compile(excelBlob) {
       alphabetIndex++;
     }
   }
-
-  validateHeaders(csvHeaders);
 
   const csvValues = csvRows.slice(2);
 

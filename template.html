@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="px-10 py-4">
+  <body class="px-10 py-4 mt-5">
     <!-- HEADER -->
     <div class="flex justify-between text-sm">
       <div class="flex flex-col">
@@ -31,9 +31,8 @@
         <div class="flex flex-col pl-12">
           <div>
             {{#items}}
-            <div
-              class="flex justify-between pr-20 {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}}"
-            >
+            <!-- {{#unless @first}} border-y-[1px] border-y-gray-500 {{/unless}} -->
+            <div class="flex justify-between pr-20">
               <div>{{itemName}}</div>
               <div>{{itemValue}}</div>
             </div>
@@ -43,13 +42,13 @@
           <div class="flex justify-between">
             {{#ifEquals title "TAX"}}
             <div>TAX BORNED BY AGENT</div>
-            <div class="font-bold">{{total}}</div>
+            <div class="">{{total}}</div>
             {{else}} {{#ifEquals title "TAX ADJUSTMENT"}}
             <div>TAX BORNED BY AGENT ADJUST</div>
-            <div class="font-bold">{{total}}</div>
+            <div class="">{{total}}</div>
             {{else}}
             <div>TOTAL</div>
-            <div class="font-bold">{{total}}</div>
+            <div class="">{{total}}</div>
             {{/ifEquals}} {{/ifEquals}}
           </div>
         </div>
