@@ -38,8 +38,19 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     // CONVERT TO PDF
     const browser = await puppeteer.launch({
       headless: 'new',
-      executablePath: '/usr/bin/chromium',
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      pipe: true,
+      dumpio: true,
+      // executablePath: '/usr/bin/chromium',
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--no-zygote',
+        '--disable-gpu',
+        '--disable-audio-output',
+        '--headless',
+        '--single-process',
+      ],
     });
 
     const pdfFiles = [];
