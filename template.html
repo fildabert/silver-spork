@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="px-8 py-4 mt-6 pr-28 ml-1">
+  <body class="px-8 py-4 mt-6 pr-16 ml-1 font-['Arial']">
     <!-- HEADER -->
-    <div class="flex justify-between text-sm font-medium">
+    <div class="flex justify-between text-sm font-normal">
       <div class="flex flex-col">
         <div class="leading-[1]">PT SEQUIS TEST ABC</div>
         <div class="leading-[1]">INCOME STATEMENT</div>
         <div class="leading-[1]">PAYMENT DATE : {{paymentDate}}</div>
-        <div class="h-4"></div>
-        <div class="leading-[1]">NPK / NAMA: {{ name }}</div>
+        <div class="h-[25px]"></div>
+        <div class="leading-[1]">NPK / NAMA : {{ name }}</div>
         <div class="leading-[1]">
-          BRANCH : <span class="w-4 pl-4 h-1"></span> {{branch}}
+          BRANCH <span class="w-4 pl-[23px] h-1"></span> :<span
+            class="pl-[2px]"
+          ></span
+          >{{branch}}
         </div>
       </div>
 
-      <div class="pr-5">NO: {{no}}</div>
+      <div class="pr-5">NO : {{no}}</div>
     </div>
 
     <!-- DIVIDER -->
     <div class="my-1 border-y-[0.5px] border-y-black w-full"></div>
 
-    <div class="text-sm font-medium pr-6">
+    <div class="text-sm font-normal pr-6">
       <!-- A. COMMISSION -->
       {{#with Invoices.[0]}}
       <div class="my-1">

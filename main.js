@@ -138,6 +138,7 @@ async function compile(excelBlob) {
 
   for (let i = 0; i < dataResult.length; i++) {
     const html = compileTemplate(dataResult[i]);
+    // fs.writeFileSync('./result.html', html, 'utf-8');
     result.push({
       name: dataResult[i].name + '-' + dataResult[i].paymentDate,
       html,
