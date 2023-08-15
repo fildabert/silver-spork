@@ -2,7 +2,7 @@
 version: '2'
 services:
   app:
-    platform: linux/amd64
+    # platform: linux/amd64
     container_name: pdf-converter
     build:
       context: .
