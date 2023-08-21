@@ -34,7 +34,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const fileBuffer = req.file.buffer;
 
     const results = await compile(fileBuffer);
-
     // CONVERT TO PDF
     const browser = await puppeteer.launch({
       headless: 'new',
@@ -52,12 +51,18 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         '--single-process',
       ],
     });
-
+    console.log('WER 1');
     const pdfFiles = [];
     for (let i = 0; i < results.length; i++) {
       const page = await browser.newPage();
       const { name, html } = results[i];
       await page.setContent(html);
+      const cssContent = fs.readFileSync('./output.css', 'utf-8');
+      await page.evaluate((cssContent) => {
+        const style = document.createElement('style');
+        style.textContent = cssContent;
+        document.head.appendChild(style);
+      }, cssContent);
       const pdfBuffer = await page.pdf({ format: 'A4' });
 
       pdfFiles.push({
@@ -65,9 +70,13 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         buffer: pdfBuffer,
       });
     }
+    console.log('WER 2');
 
     await browser.close();
+    console.log('-a--a-a');
     const zip = new jszip();
+
+    console.log('WE3');
 
     for (let i = 0; i < pdfFiles.length; i++) {
       const { name, buffer } = pdfFiles[i];

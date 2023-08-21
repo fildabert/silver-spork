@@ -15,25 +15,26 @@ function validateHeaders(headers) {
     'NO',
     'COMMISSION (FYC;SYC;RC;APB)',
     'PERSONAL PRODUCTION BONUS',
-    '',
+
     'GROUP PRODUCTION BONUS',
     'ALLOWANCE',
     'CONTEST & OTHER',
     'TOTAL INCOME',
     'TAX',
-    '',
+
     'TAX ADJUSTMENT',
-    '',
+
     'NET INCOME',
     'DEDUCTION',
     'PENDING INCOME',
     'NET PAYMENT',
     'SAY (IN RUPIAH)',
   ];
-  const headerz = headers.map((h) => {
-    return h.trim();
-  });
-
+  const headerz = headers
+    .map((h) => {
+      return h.trim();
+    })
+    .filter((f) => f);
   const isEqual = _.isEqual(basicHeaders, headerz);
   if (!isEqual) {
     throw Object.assign(new Error('Invalid Excel File'), { code: 400 });
